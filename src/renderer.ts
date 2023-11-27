@@ -56,7 +56,7 @@ export class Renderer extends Disposable {
     const g = new Group();
     this.group = g;
     this.render.add(g);
-    g.setPosition([this.render.getWidth() / 2, 12]);
+    g.setPosition([12,this.render.getHeight() / 2]);
     visit(root, (node) => {
       this.addNode(node, g);
     });
@@ -92,12 +92,13 @@ export class Renderer extends Disposable {
   }
 
   private addNode(node: InnerNode, g: Group, createToParentLine = false) {
+    //可自行实现dom
     const rect = new Rect({
       shape: {
-        x: node.x - node.width / 2,
-        y: node.y,
-        width: node.width,
-        height: node.height,
+        y: node.x - node.width / 2,
+        x: node.y,
+        height: node.width,
+        width: node.height,
         r: 4,
       },
       style: {
@@ -193,14 +194,14 @@ function getBezierCurveShape(
   child: InnerNode,
 ): Partial<BezierCurveShape> {
   return {
-    x1: parent.x,
-    y1: parent.y + parent.height,
-    x2: child.x,
-    y2: child.y,
-    cpx1: parent.x,
-    cpy1: (child.y + parent.y + parent.height) / 2,
-    cpx2: child.x,
-    cpy2: (child.y + parent.y + parent.height) / 2,
+    y1: parent.x,
+    x1: parent.y + parent.height,
+    y2: child.x,
+    x2: child.y,
+    cpy1: parent.x,
+    cpx1: (child.y + parent.y + parent.height) / 2,
+    cpy2: child.x,
+    cpx2: (child.y + parent.y + parent.height) / 2,
   };
 }
 
